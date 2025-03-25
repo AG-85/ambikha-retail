@@ -1,0 +1,66 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1>Your Shopping Cart</h1>
+
+{% if error == 'empty_cart' %}
+<div class="message error" id="empty-cart-message">
+    Your cart is empty. Please add items before checking out.
+</div>
+{% elif error == 'out_of_stock' %}
+<div class="message error" id="out-of-stock-message">
+    Some items in your cart are out of stock
+</div>
+{% endif %}
+
+{% if cart_items %}
+<table border="1" style="width: 100%; border-collapse: collapse;">
+    <tr>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Subtotal</th>
+    </tr>
+    {% for item in cart_items %}
+    <tr>
+        <td>{{ item.name }}</td>
+        <td>${{ item.price }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>${{ item.subtotal }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+        <td colspan="3" style="text-align: right;"><strong>Total:</strong></td>
+        <td><strong>${{ total }}</strong></td>
+    </tr>
+</table>
+
+<div style="margin-top: 20px;">
+    <form action="{{ url_for('checkout') }}" method="post" id="checkout-form">
+        <button type="submit" id="checkout-button">Checkout</button>
+    </form>
+
+    <!-- Form for testing the out of stock scenario -->
+    <form action="{{ url_for('simulate_out_of_stock') }}" method="post" id="simulate-out-of-stock-form">
+        <input type="hidden" name="product_id" value="{{ cart_items[0].id if cart_items else '' }}">
+        <button type="submit" id="simulate-out-of-stock-button">Simulate Out of Stock</button>
+    </form>
+
+    <!-- Form for testing checkout error scenario -->
+    <form action="{{ url_for('checkout') }}" method="post" id="simulate-checkout-error-form">
+        <input type="hidden" name="simulate_crash" value="true">
+        <button type="submit" id="simulate-checkout-error-button">Simulate Checkout Error</button>
+    </form>
+
+    <a href="{{ url_for('clear_cart') }}" style="margin-left: 10px;" id="clear-cart-link">Clear Cart</a>
+</div>
+{% else %}
+<p>Your cart is currently empty.</p>
+<p><a href="{{ url_for('product') }}">Continue Shopping</a></p>
+
+<!-- Allow checkout attempt with empty cart for testing -->
+<form action="{{ url_for('checkout') }}" method="post" id="checkout-form">
+    <button type="submit" id="checkout-button">Attempt Checkout</button>
+</form>
+{% endif %}
+{% endblock %}

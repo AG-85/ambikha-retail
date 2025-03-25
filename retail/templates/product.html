@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1>Product Search</h1>
+
+<form action="{{ url_for('product') }}" method="post" id="product-search-form">
+    <input type="text" name="search" placeholder="Search for products" required id="product-search-input">
+    <button type="submit" id="product-search-button">Search</button>
+</form>
+
+{% if error == 'product_not_found' %}
+<div class="message error" id="product-not-found-message">
+    Product not found. Please try another search term.
+</div>
+{% elif product %}
+<div class="product">
+    <h2>{{ product.name }}</h2>
+    <p>Price: ${{ product.price }}</p>
+    <p>Available Stock: {{ product.stock }}</p>
+
+    <form action="{{ url_for('add_to_cart') }}" method="post" id="add-to-cart-form">
+        <input type="hidden" name="product_id" value="{{ product_id }}">
+        <label for="quantity">Quantity:</label>
+        <input type="number" name="quantity" id="quantity" min="1" max="{{ product.stock }}" value="1">
+        <button type="submit" id="add-to-cart-button">Add to Cart</button>
+    </form>
+
+    {% if error == 'invalid_quantity' %}
+    <div class="message error" id="invalid-quantity-message">
+        Please enter a valid quantity (greater than 0)
+    </div>
+    {% elif error == 'out_of_stock' %}
+    <div class="message error" id="out-of-stock-message">
+        Not enough stock available
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

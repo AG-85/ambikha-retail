@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1>Welcome to Ambikha Retail</h1>
+<p>Browse our selection of products and enjoy shopping!</p>
+
+<div>
+    <h2>Search for Products</h2>
+    <form action="{{ url_for('product') }}" method="post">
+        <input type="text" name="search" placeholder="Search for products" required>
+        <button type="submit">Search</button>
+    </form>
+</div>
+{% endblock %}
