@@ -1,3 +1,12 @@
+# **About the 'Retail' project**
+
+You are an automation engineer in an online retailing company that has a unique opportunity to sell a brand new product. To make this achievable you need to build a new, complex system in a relatively short timeframe.
+It is critical that there is a system that works and gets the job done, even if this means sacrificing functionality and even system stability.
+
+Your job is to help your development team implement the first version of this system so you are able to sell the product in the requisite timeframe.
+
+---
+
 # 🚀 **Automation QA Engineer | 10+ Years Experience**  
 
 Hi! I'm **Ambikha**, a **QA Engineer** with **10+ years of experience** in software testing. While I have a strong foundation in **manual testing**, my primary focus is on **test automation**, **DevOps practices**, and **AI-driven testing solutions**.  
